@@ -71,7 +71,18 @@ RUN apt-get install -y --no-install-recommends \
 # perf
 RUN apt-get install -y --no-install-recommends \
         linux-tools-4.4     \
-        perf-tools-unstable
+        perf-tools-unstable \
+    && ln -sf /usr/bin/perf_4.4 /usr/bin/perf
+
+# Golang
+ENV GOLANG_VERSION 1.10.3
+ENV GOPATH /go
+RUN curl -L https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz \
+        | tar -C /usr/local -xzf -
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
+
+# https://github.com/google/embiggen-disk
+RUN go get github.com/google/embiggen-disk
 
 # Sysdig
 # RUN curl -s https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public \
@@ -96,22 +107,4 @@ RUN apt-get install -y --no-install-recommends \
 #     && apt-get update \
 #     && apt-get install -y --no-install-recommends lxc-docker-1.6.2
 
-# Dotfiles
-# RUN git clone https://github.com/ragnar-johannsson/dotfiles.git /tmp/dotfiles \
-#     && cp /tmp/dotfiles/zshrc.symlink /root/.zshrc \
-#     && cp /tmp/dotfiles/vimrc.symlink /root/.vimrc \
-#     && cp -r /tmp/dotfiles/zsh.symlink /root/.zsh  \
-#     && cp -r /tmp/dotfiles/vim.symlink /root/.vim  \
-#     && zsh -i -c "cat /dev/null" \
-#     && sed -i 's/^colorscheme /" colorscheme /' /root/.vimrc \
-#     && sed -i '/fzf/s_\./install_echo nnn \\| \./install_' /root/.vimrc \
-#     && vim +PlugInstall +qall \
-#     && sed -i 's/^" colorscheme /colorscheme /' /root/.vimrc \
-#     && sed -i "/'.*separator'/d" /root/.vimrc \
-#     && sed -i '/fzf/d; /^# GQ/d; /DEVMANAGEMENT/d' /root/.bashrc /root/.zshrc \
-#     && echo 'ln -s /docker/docker.sock /var/run/docker.sock 2>/dev/null' >> /root/.zshrc \
-#     && touch /root/.z \
-#     && rm -rf /tmp/dotfiles
-
 CMD ["/bin/zsh"]
-
