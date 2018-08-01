@@ -1,4 +1,5 @@
-FROM gcr.io/google-containers/toolbox:20180123-00
+FROM gcr.io/google-containers/toolbox:20180309-00
+# https://console.cloud.google.com/gcr/images/google-containers/GLOBAL/toolbox?gcrImageListsize=50
 
 RUN sed -i 's/$/ contrib non-free/' /etc/apt/sources.list && apt-get update
 
@@ -70,9 +71,8 @@ RUN apt-get install -y --no-install-recommends \
 
 # perf
 RUN apt-get install -y --no-install-recommends \
-        linux-tools-4.4     \
-        perf-tools-unstable \
-    && ln -sf /usr/bin/perf_4.4 /usr/bin/perf
+        linux-tools     \
+        perf-tools-unstable
 
 # Golang
 ENV GOLANG_VERSION 1.10.3
