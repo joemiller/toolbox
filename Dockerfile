@@ -1,7 +1,7 @@
 FROM gcr.io/google-containers/toolbox:20180309-00
 # https://console.cloud.google.com/gcr/images/google-containers/GLOBAL/toolbox?gcrImageListsize=50
 
-RUN sed -i 's/$/ contrib non-free/' /etc/apt/sources.list && apt-get update
+RUN sed -i 's/$/ contrib non-free/' /etc/apt/sources.list && rm -rf /var/lib/apt/lists/* && apt-get update
 
 # RUN apt-get update -q \
 #     && apt-get install -qy \
