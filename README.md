@@ -8,6 +8,23 @@ or any similar (read-only root, containers-only) Linux environment.
 
 A work in progress.
 
+https://hub.docker.com/r/joemiller/toolbox/
+
+Usage
+-----
+
+To change the default settings, modify the /etc/default/toolbox file, or specify
+new values for the variables in `${HOME}/.toolboxrc`:
+
+```
+echo "TOOLBOX_DOCKER_IMAGE=joemiller/toolbox" > "${HOME}/.toolboxrc"
+echo "TOOLBOX_DOCKER_TAG=latest" >> "${HOME}/.toolboxrc"
+```
+
+Then, execute `toolbox` to download the image and spawn a shell.
+
+Further details on customizing toolbox execution: https://cloud.google.com/container-optimized-os/docs/how-to/toolbox
+
 TODO
 ----
 - [x] initial container build, based on google's toolbox, with a bunch of common diagnostic tools built in
@@ -26,7 +43,7 @@ TODO
 - [ ] get neovim working in a decent enough way
 - [ ] dev tools?
   - [ ] linters, etc, multiple langs.. go, python, ruby …
-- [ ] setup CI/CD. At least a build+push of a new tag on master commit.
+- [x] setup CI/CD. At least a build+push of a new tag on master commit.
 
 references:
 -----------
